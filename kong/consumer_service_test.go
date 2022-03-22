@@ -87,6 +87,10 @@ func TestConsumerWithTags(T *testing.T) {
 }
 
 func TestConsumerListEndpoint(T *testing.T) {
+	// Although this endpoint exists on both Enterprise and Community, it is sensitive to the creation of consumers
+	// in any other test, which we do in multiple tests in this file and elsewhere. Using a workspace avoids this
+	// problem, but requires Enterprise.
+	RunWhenEnterprise(T, ">=0.33.0", RequiredFeatures{})
 	assert := assert.New(T)
 
 	client, err := NewTestClient(nil, nil)
